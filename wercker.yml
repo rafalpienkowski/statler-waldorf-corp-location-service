@@ -41,7 +41,7 @@ test:
           dotnet test
     - script:
         name: copy binary
-        cwd: src/StatlerWaldorfCorp.TeamService
+        cwd: src/StatlerWaldorfCorp.LocationService
         code: |
           cp -r . $WERCKER_OUTPUT_DIR/app 
 deploy:
