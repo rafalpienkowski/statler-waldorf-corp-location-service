@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace StatlerWaldorfCorp.LocationService
 {
@@ -14,12 +7,17 @@ namespace StatlerWaldorfCorp.LocationService
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
-        }
+            var config = new ConfigurationBuilder()
+                    .AddEnvironmentVariables()
+                    .Build();
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+            var host = new WebHostBuilder()
+                .UseKestrel()
                 .UseStartup<Startup>()
+                .UseConfiguration(config)
                 .Build();
+
+            host.Run();
+        }
     }
 }
