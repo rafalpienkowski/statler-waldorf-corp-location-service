@@ -48,7 +48,7 @@ deploy:
   steps:
     - internal/docker-push:
         repository: rafalpienkowski/statler-waldorf-corp-location-service
-        tag: latest, 1.0
+        tag: latest, 2.0
         username: $USERNAME
         password: $PASSWORD
         registry: https://registry.hub.docker.com/v2
