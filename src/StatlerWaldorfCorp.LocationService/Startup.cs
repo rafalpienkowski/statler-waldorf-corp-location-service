@@ -59,9 +59,9 @@ namespace StatlerWaldorfCorp.LocationService
                 using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
                 {
                     var context = serviceScope.ServiceProvider.GetService<LocationDbContext>();
-                    if (!context.Database.EnsureCreated())
+                    if (context.Database.GetPendingMigrations() != null)
                     {
-                        context.Database .Migrate();
+                        context.Database.Migrate();
                     }
                 }
             }
