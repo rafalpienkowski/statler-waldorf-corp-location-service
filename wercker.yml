@@ -45,6 +45,7 @@ test:
         code: |
           cp -r . $WERCKER_OUTPUT_DIR/app 
 deploy:
+  box: microsoft/aspnetcore:2.0
   steps:
     - internal/docker-push:
         repository: rafalpienkowski/statler-waldorf-corp-location-service
