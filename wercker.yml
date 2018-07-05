@@ -39,6 +39,7 @@ test:
         cwd: test/StatlerWaldorfCorp.LocationService.Tests
         code: |
           dotnet test
+packaging:
     - script:
         name: copy binary
         cwd: src/StatlerWaldorfCorp.LocationService
