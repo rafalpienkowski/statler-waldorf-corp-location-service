@@ -12,16 +12,6 @@ build:
         cwd: src/StatlerWaldorfCorp.LocationService
         code: |
           dotnet build
-    - script:
-        name: publish
-        cwd: src/StatlerWaldorfCorp.LocationService
-        code: |
-          dotnet publish -c Release -o publish	 
-    - script:
-        name: chmod
-        cwd: src/StatlerWaldorfCorp.LocationService
-        code: |
-          chmod +x ./docker_entrypoint.sh
 test:
   steps:
     - script:
@@ -40,12 +30,26 @@ test:
         code: |
           dotnet test
 packaging:
-  steps:
+    - script:
+        name: publish
+        cwd: src/StatlerWaldorfCorp.LocationService
+        code: |
+          dotnet publish -o publish  
     - script:
         name: copy binary
         cwd: src/StatlerWaldorfCorp.LocationService
         code: |
           cp -r . $WERCKER_OUTPUT_DIR/app 
+    - script:
+        name: copy entrypoint
+        code: |
+          cp docker_entrypoint.sh $WERCKER_OUTPUT_DIR/app          
+    - script:
+        name: copy config
+        cwd: src/StatlerWaldorfCorp.LocationService
+        code: |
+          cp appsettings*json $WERCKER_OUTPUT_DIR/app/publish
+          mkdir -p $WERCKER_OUTPUT_DIR/app/publish/app/tmp
 deploy:
   box: microsoft/aspnetcore:2.0
   steps:
