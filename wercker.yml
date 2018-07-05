@@ -30,6 +30,7 @@ test:
         code: |
           dotnet test
 packaging:
+  steps:
     - script:
         name: publish
         cwd: src/StatlerWaldorfCorp.LocationService
@@ -49,7 +50,6 @@ packaging:
         cwd: src/StatlerWaldorfCorp.LocationService
         code: |
           cp appsettings*json $WERCKER_OUTPUT_DIR/app/publish
-          mkdir -p $WERCKER_OUTPUT_DIR/app/publish/app/tmp
 deploy:
   box: microsoft/aspnetcore:2.0
   steps:
