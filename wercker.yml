@@ -12,6 +12,11 @@ build:
         cwd: src/StatlerWaldorfCorp.LocationService
         code: |
           dotnet build
+    - script:
+        name: chmod
+        cwd: src/StatlerWaldorfCorp.LocationService
+        code: |
+          chmod +x ./docker_entrypoint.sh
 test:
   steps:
     - script:
@@ -47,11 +52,6 @@ packaging:
         code: |
           cp appsettings*json $WERCKER_OUTPUT_DIR/app/publish
     - script:
-        name: chmod
-        cwd: src/StatlerWaldorfCorp.LocationService
-        code: |
-          chmod +x ./docker_entrypoint.sh
-    - script:
         name: copy entrypoint
         cwd: src/StatlerWaldorfCorp.LocationService
         code: |
@@ -66,5 +66,4 @@ deploy:
         password: $PASSWORD
         registry: https://registry.hub.docker.com/v2
         entrypoint: "/pipeline/source/app/docker_entrypoint.sh"
-        ports: "80"
         env: "ASPNETCORE_URLS=http://+:5000"
