@@ -42,15 +42,20 @@ packaging:
         code: |
           cp -r . $WERCKER_OUTPUT_DIR/app 
     - script:
-        name: copy entrypoint
-        cwd: src/StatlerWaldorfCorp.LocationService
-        code: |
-          cp docker_entrypoint.sh $WERCKER_OUTPUT_DIR/app          
-    - script:
         name: copy config
         cwd: src/StatlerWaldorfCorp.LocationService
         code: |
           cp appsettings*json $WERCKER_OUTPUT_DIR/app/publish
+    - script:
+        name: chmod
+        cwd: src/StatlerWaldorfCorp.LocationService
+        code: |
+          chmod +x ./docker_entrypoint.sh
+    - script:
+        name: copy entrypoint
+        cwd: src/StatlerWaldorfCorp.LocationService
+        code: |
+          cp docker_entrypoint.sh $WERCKER_OUTPUT_DIR/app          
 deploy:
   box: microsoft/aspnetcore:2.0
   steps:
