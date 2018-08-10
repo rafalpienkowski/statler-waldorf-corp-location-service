@@ -12,6 +12,7 @@ using Microsoft.Extensions.Options;
 using StatlerWaldorfCorp.LocationService.Models;
 using StatlerWaldorfCorp.LocationService.Persistence;
 using Microsoft.Extensions.Configuration.Json;
+using System.Threading;
 
 namespace StatlerWaldorfCorp.LocationService
 {
@@ -61,7 +62,18 @@ namespace StatlerWaldorfCorp.LocationService
                     var context = serviceScope.ServiceProvider.GetService<LocationDbContext>();
                     if (context.Database.GetPendingMigrations() != null)
                     {
-                        context.Database.Migrate();
+                        for(int i = 0; i < 3; i++)
+                        {
+                            Thread.Sleep(i * 5000);
+                            try
+                            {
+                                context.Database.Migrate();
+                                break;
+                            }
+                            catch(Exception ex) {
+                                _logger.LogError(ex, "Migration failed try again");
+                            }
+                        }
                     }
                 }
             }
