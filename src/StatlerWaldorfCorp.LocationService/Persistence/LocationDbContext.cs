@@ -27,8 +27,6 @@ namespace StatlerWaldorfCorp.LocationService.Persistence
         public LocationDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<LocationDbContext>();
-            var connectionString = "Host=localhost;Port=5432;Database=locationservice;Username=postgres;Password=mysecretpassword";
-            optionsBuilder.UseNpgsql(connectionString);
             return new LocationDbContext(optionsBuilder.Options);
         }
     }
